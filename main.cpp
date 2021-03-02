@@ -38,6 +38,22 @@ int main() {
 	cout << iLL->toString() << endl;
 	iLL->insertHead(20);
 	cout << iLL->toString() << endl;
+
+	iLL->insertTail(40);
+	cout << iLL->toString() << endl;
+	iLL->insertTail(50);
+	cout << iLL->toString() << endl;
+
+	iLL->insertAfter(30, 40);
+	cout << iLL->toString() << endl;
+	// iLL->insertAfter(30, 60);
+	// cout << iLL->toString() << endl;
+
+	iLL->remove(30);
+	cout << iLL->toString() << endl;
+	iLL->remove(60);
+	cout << iLL->toString() << endl;
+
 	return 0;
 	// End test
 
