@@ -56,6 +56,7 @@ public:
 			mylist = new Node(value);
 			mylist->next = ptr;
 			num_items++;
+			// delete mylist;
 			cout << "In insertHead" << endl;
 		}
 	};
@@ -119,9 +120,9 @@ public:
 			}
 			// check the 1st value
 			if (ptr->data == insertionNode) {
-				cout << "test" << endl;
+				// cout << "test" << endl;
 				Node *newNode = new Node(value,ptr->next);
-						// set ptr's node to the "new" node
+				// set ptr's node to the "new" node
 				ptr->next = newNode;
 				num_items++;
 				return;
@@ -254,9 +255,9 @@ public:
 	"1 2 3 4 5"
 	*/
 	virtual string toString(){
-		if (num_items == 0) {
-			throw std::out_of_range("toString Error");
-		}
+		// if (num_items == 0) {
+		// 	throw out_of_range("toString Error");
+		// }
 		stringstream ss;
 		for(Node *ptr =mylist; ptr != NULL; ptr = ptr->next){
 			if (ptr->next == NULL) {

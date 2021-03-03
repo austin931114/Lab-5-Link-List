@@ -1,15 +1,5 @@
 out_file1.txt
 out_file2.txt
-printList						      <
-  							      <
 out_file3.txt
-printList						      <
-  							      <
-printList						      <
-  							      <
 out_file4.txt
-printList						      <
-  							      <
-printList						      <
-  							      <
 out_file5.txt

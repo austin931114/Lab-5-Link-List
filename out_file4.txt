@@ -44,7 +44,11 @@ printList
   Coming back to where you started is not the same as never leaving. -Terry Pratchett
 clear
 size 0
+printList
+  
 clear
 remove "string"
 remove -Terry
 size 0
+printList
+  
