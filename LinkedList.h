@@ -29,6 +29,7 @@ public:
 		num_items = 0;
 	};
 	virtual ~LinkedList(void) {
+		// make sure to delete all pointer to prevent data leak
 		clear();
 	};
 
@@ -54,17 +55,13 @@ public:
 			return;
 		}
 		else if (chechMatch == 0) {
-			// if (mylist == NULL) {
-			// 	mylist = new Node(value);
-			// }
-			// else {
-				Node *ptr = mylist;
-				mylist = new Node(value);
-				mylist->next = ptr;
-				num_items++;
-				// delete mylist;
-				cout << "In insertHead" << endl;
-			// }
+			Node *ptr = mylist;
+			// set mylist to new 1st node
+			mylist = new Node(value);
+			// set original mylist to second node
+			mylist->next = ptr;
+			num_items++;
+			cout << "In insertHead" << endl;
 		}
 	};
 
@@ -84,8 +81,7 @@ public:
 			Node *ptr = mylist;
 			cout << "In insertTail" << endl;
 			if(mylist == NULL){
-			//	mylist = new Node(value, NULL);
-				 insertHead(value);
+				mylist = new Node(value, NULL);
 			} 
 			else {
 				while(ptr != NULL){
@@ -126,6 +122,7 @@ public:
 				cout << "insertAfter error" << endl;
 				return;
 			}
+
 			// check the 1st value
 			if (ptr->data == insertionNode) {
 				// cout << "test" << endl;
@@ -171,12 +168,12 @@ public:
 			cout << "remove error" << endl;
 			return;
 		}
+		// remove "head"
 		if (ptr1->data == value) {
 			// cout << "test " << endl;
 			Node *current = mylist;
 			mylist = mylist->next;
 			delete current;
-			current = NULL;
 			num_items--;
 			return;
 		}
@@ -184,23 +181,16 @@ public:
 		else {
 			Node *ptr = mylist;
 			while(ptr->next != NULL && ptr->data != value){
-				// cout <<" data  next "<<endl;
 				if (ptr->next->data == value) {
-					// cout << "test" << endl;
+					// create a new node to prevent wrong operation
 					Node *current = ptr->next;
+					// set the node we want to remove to the one next to it
 		  		ptr->next = ptr->next->next;
 		  		delete current;
-					current = NULL;
 					num_items--;
 					return;
 				}
-				// if (ptr == NULL) {
-				// 	cout << "doesnt exist" << endl;
-				// 	throw out_of_range("remove Error");
-				// 	break;
-				// } 
 				else {
-					// cout << "test2" << endl;
 					ptr = ptr->next;
 				}
 			}
@@ -214,12 +204,12 @@ public:
 	*/
 	virtual void clear(){
 		if (num_items > 0) {
+			// at least delete once from do-while
 			do {
 				Node *current = mylist;
 				mylist = mylist->next;
 				delete current;
 				num_items--;
-				current = NULL;
 			}while (num_items != 0);			
 		}
 	};
@@ -240,6 +230,7 @@ public:
 		T myValue;
 		Node *ptr = mylist;
 		while (index != -1) {
+			// continue move to the next "value"
 			myValue = ptr->data;
 			ptr = ptr->next;
 			index--;
@@ -266,9 +257,6 @@ public:
 	"1 2 3 4 5"
 	*/
 	virtual string toString(){
-		// if (num_items == 0) {
-		// 	throw out_of_range("toString Error");
-		// }
 		stringstream ss;
 		for(Node *ptr =mylist; ptr != NULL; ptr = ptr->next){
 			if (ptr->next == NULL) {
