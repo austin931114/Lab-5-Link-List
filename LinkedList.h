@@ -28,7 +28,9 @@ public:
 		mylist = NULL;
 		num_items = 0;
 	};
-	virtual ~LinkedList(void) {};
+	virtual ~LinkedList(void) {
+		clear();
+	};
 
 	virtual int match(T value) {
 		int temp = 0;
@@ -52,12 +54,17 @@ public:
 			return;
 		}
 		else if (chechMatch == 0) {
-			Node *ptr = mylist;
-			mylist = new Node(value);
-			mylist->next = ptr;
-			num_items++;
-			// delete mylist;
-			cout << "In insertHead" << endl;
+			// if (mylist == NULL) {
+			// 	mylist = new Node(value);
+			// }
+			// else {
+				Node *ptr = mylist;
+				mylist = new Node(value);
+				mylist->next = ptr;
+				num_items++;
+				// delete mylist;
+				cout << "In insertHead" << endl;
+			// }
 		}
 	};
 
@@ -77,7 +84,8 @@ public:
 			Node *ptr = mylist;
 			cout << "In insertTail" << endl;
 			if(mylist == NULL){
-				mylist = new Node(value, NULL);
+			//	mylist = new Node(value, NULL);
+				 insertHead(value);
 			} 
 			else {
 				while(ptr != NULL){
@@ -168,6 +176,7 @@ public:
 			Node *current = mylist;
 			mylist = mylist->next;
 			delete current;
+			current = NULL;
 			num_items--;
 			return;
 		}
@@ -181,6 +190,7 @@ public:
 					Node *current = ptr->next;
 		  		ptr->next = ptr->next->next;
 		  		delete current;
+					current = NULL;
 					num_items--;
 					return;
 				}
@@ -209,6 +219,7 @@ public:
 				mylist = mylist->next;
 				delete current;
 				num_items--;
+				current = NULL;
 			}while (num_items != 0);			
 		}
 	};
