@@ -30,6 +30,15 @@ public:
 	};
 	virtual ~LinkedList(void) {};
 
+	virtual int match(T value) {
+		int temp = 0;
+		for(Node *ptr =mylist; ptr != NULL; ptr = ptr->next){
+			if (ptr->data == value) {
+				temp = 99999;
+			}
+		}
+		return temp;
+	}
 	/*
 	insertHead
 
@@ -38,11 +47,17 @@ public:
 	Do not allow duplicate values in the list.
 	*/
 	virtual void insertHead(T value) {
-		Node *ptr = mylist;
-		mylist = new Node(value);
-		mylist->next = ptr;
-		num_items++;
-		cout << "In insertHead" << endl;
+		int chechMatch = match(value);
+		if (chechMatch == 99999) {
+			return;
+		}
+		else if (chechMatch == 0) {
+			Node *ptr = mylist;
+			mylist = new Node(value);
+			mylist->next = ptr;
+			num_items++;
+			cout << "In insertHead" << endl;
+		}
 	};
 
 	/*
@@ -53,23 +68,30 @@ public:
 	Do not allow duplicate values in the list.
 	*/
 	virtual void insertTail(T value){
-		Node *ptr = mylist;
-		cout << "In insertTail" << endl;
-		if(mylist == NULL){
-			mylist = new Node(value, NULL);
-		} 
-		else {
-			while(ptr != NULL){
-				// cout << ptr<<" data "<<ptr->data<<" next "<<ptr->next<<endl;
-				if(ptr->next == NULL) {
-					ptr->next = new Node(value, NULL);
-					break;
-				} else {
-					ptr = ptr->next;
+		int chechMatch = match(value);
+		if (chechMatch == 99999) {
+			return;
+		}
+		else if (chechMatch == 0) {
+			Node *ptr = mylist;
+			cout << "In insertTail" << endl;
+			if(mylist == NULL){
+				mylist = new Node(value, NULL);
+			} 
+			else {
+				while(ptr != NULL){
+					// cout << ptr<<" data "<<ptr->data<<" next "<<ptr->next<<endl;
+					if(ptr->next == NULL) {
+						ptr->next = new Node(value, NULL);
+						break;
+					} 
+					else {
+						ptr = ptr->next;
+					}
 				}
 			}
+			num_items++;
 		}
-		num_items++;
 
 	};
 
@@ -83,33 +105,43 @@ public:
 	insertionNode is in the list. Do not allow duplicate values in the list.
 	*/
 	virtual void insertAfter(T value, T insertionNode){
-		cout << "In insertAfter" << endl;
-		Node *ptr = mylist;
-
-		if(mylist == NULL) {
-			throw std::out_of_range("insertAfter Error");
+		int chechMatch = match(value);
+		if (chechMatch == 99999) {
+			return;
 		}
+		else if (chechMatch == 0) {
+			cout << "In insertAfter" << endl;
+			Node *ptr = mylist;
 
-
-		else {
-			while(ptr->data != insertionNode){
-				// cout << ptr<<" data "<<ptr->data<<" next "<<ptr->next<<endl;
-				if (ptr->next->data == insertionNode) {
-					ptr = ptr->next;
-					
-					// create a new node with "value" and point to the node next to ptr
-					Node *newNode = new Node(value,ptr->next);
-					// set ptr's node to the "new" node
-					ptr->next = newNode;
-					num_items++;
-					break;
-				}
-				if (ptr->next == NULL) {
-					throw out_of_range("insertAfter Error");
-					break;
-				} 
-				else {
-					ptr = ptr->next;
+			if(num_items == 0) {
+				cout << "insertAfter error" << endl;
+				return;
+			}
+			// check the 1st value
+			if (ptr->data == insertionNode) {
+				cout << "test" << endl;
+				Node *newNode = new Node(value,ptr->next);
+						// set ptr's node to the "new" node
+				ptr->next = newNode;
+				num_items++;
+				return;
+			}
+			else {
+				// check if next node exist
+				while(ptr->next != NULL && ptr->data != insertionNode){
+					// cout << ptr<<" data "<<ptr->data<<" next "<<ptr->next<<endl;
+					if (ptr->next->data == insertionNode) {
+						ptr = ptr->next;
+						// create a new node with "value" and point to the node next to ptr
+						Node *newNode = new Node(value,ptr->next);
+						// set ptr's node to the "new" node
+						ptr->next = newNode;
+						num_items++;
+						break;
+					}
+					else {
+						ptr = ptr->next;
+					}
 				}
 			}
 		}
@@ -126,31 +158,38 @@ public:
 		cout << "In remove" << endl;
 		Node *ptr1 = mylist;
 
-		if (mylist == NULL) {
-			throw out_of_range("insertAfter Error");
+		if (num_items == 0) {
+			cout << "remove error" << endl;
+			return;
 		}
 		if (ptr1->data == value) {
+			// cout << "test " << endl;
 			Node *current = mylist;
 			mylist = mylist->next;
 			delete current;
+			num_items--;
+			return;
 		}
 
 		else {
 			Node *ptr = mylist;
-			while(ptr->data != value){
-				// cout << ptr<<" data "<<ptr->data<<" next "<<ptr->next<<endl;
+			while(ptr->next != NULL && ptr->data != value){
+				// cout <<" data  next "<<endl;
 				if (ptr->next->data == value) {
+					// cout << "test" << endl;
 					Node *current = ptr->next;
 		  		ptr->next = ptr->next->next;
 		  		delete current;
 					num_items--;
-					break;
+					return;
 				}
-				if (ptr->next == NULL) {
-					throw out_of_range("remove Error");
-					break;
-				} 
+				// if (ptr == NULL) {
+				// 	cout << "doesnt exist" << endl;
+				// 	throw out_of_range("remove Error");
+				// 	break;
+				// } 
 				else {
+					// cout << "test2" << endl;
 					ptr = ptr->next;
 				}
 			}
@@ -163,7 +202,14 @@ public:
 	Remove all nodes from the list.
 	*/
 	virtual void clear(){
-
+		if (num_items > 0) {
+			do {
+				Node *current = mylist;
+				mylist = mylist->next;
+				delete current;
+				num_items--;
+			}while (num_items != 0);			
+		}
 	};
 
 	/*
@@ -175,7 +221,18 @@ public:
 	If the given index is out of range of the list, throw an out of range exception.
 	*/
 	virtual T at(int index){
+		if (index >= num_items || index < 0) {
+			throw std::out_of_range("at Error");
+		}
 
+		T myValue;
+		Node *ptr = mylist;
+		while (index != -1) {
+			myValue = ptr->data;
+			ptr = ptr->next;
+			index--;
+		}
+		return(myValue);
 	};
 
 	/*
@@ -184,7 +241,7 @@ public:
 	Returns the number of nodes in the list.
 	*/
 	virtual int size(){
-		
+		return(num_items);
 	};
 
 	/*
@@ -197,9 +254,17 @@ public:
 	"1 2 3 4 5"
 	*/
 	virtual string toString(){
+		if (num_items == 0) {
+			throw std::out_of_range("toString Error");
+		}
 		stringstream ss;
 		for(Node *ptr =mylist; ptr != NULL; ptr = ptr->next){
-			ss <<"ptr "<<ptr<<" val "<<ptr->data<<" next "<<ptr->next<<endl;
+			if (ptr->next == NULL) {
+				ss << ptr->data;
+			}
+			else {
+				ss << ptr->data << " ";
+			}
 		}
 		return(ss.str());
 	};

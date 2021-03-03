@@ -33,28 +33,30 @@ int main() {
 	LinkedList<string>* sLL = NULL;//the string linked list
 
 	// Start test
-	iLL = new LinkedList<int>();
-	iLL->insertHead(10);
-	cout << iLL->toString() << endl;
-	iLL->insertHead(20);
-	cout << iLL->toString() << endl;
-
-	iLL->insertTail(40);
-	cout << iLL->toString() << endl;
-	iLL->insertTail(50);
-	cout << iLL->toString() << endl;
-
-	iLL->insertAfter(30, 40);
-	cout << iLL->toString() << endl;
-	// iLL->insertAfter(30, 60);
+	// iLL = new LinkedList<int>();
+	// iLL->insertHead(10);
+	// cout << iLL->toString() << endl;
+	// iLL->insertHead(20);
 	// cout << iLL->toString() << endl;
 
-	iLL->remove(30);
-	cout << iLL->toString() << endl;
-	iLL->remove(60);
-	cout << iLL->toString() << endl;
+	// iLL->insertTail(40);
+	// cout << iLL->toString() << endl;
+	// iLL->insertTail(50);
+	// cout << iLL->toString() << endl;
 
-	return 0;
+	// iLL->insertAfter(30, 40);
+	// cout << iLL->toString() << endl;
+	// // iLL->insertAfter(30, 60);
+	// // cout << iLL->toString() << endl;
+
+	// iLL->remove(30);
+	// cout << iLL->toString() << endl;
+	// iLL->remove(20);
+	// cout << iLL->toString() << endl;
+	// iLL->remove(60);
+	// cout << iLL->toString() << endl;
+
+	// return 0;
 	// End test
 
 	for (int i = 0; i < NUM_FILES; i++) {
